@@ -9,7 +9,7 @@ public partial class Commande
 
     public DateTime DateCommande { get; set; }
 
-    public int IdClient { get; set; }
+    public int? IdClient { get; set; }
 
     public int? IdTable { get; set; }
 
@@ -25,7 +25,7 @@ public partial class Commande
 
     public virtual ICollection<Facture> Factures { get; set; } = new List<Facture>();
 
-    public virtual Client IdClientNavigation { get; set; } = null!;
+    public virtual Client? IdClientNavigation { get; set; }
 
     public virtual Serveur? IdServeurNavigation { get; set; }
 

@@ -47,12 +47,15 @@ public class CommandesController : ControllerBase
     public async Task<IActionResult> CreateCommande(
         [FromBody] CreateCommandeDto dto)
     {
-        // Vérifier que le client existe
-        var clientExiste = await _context.Clients
-            .AnyAsync(c => c.IdClient == dto.IdClient);
+        // Vérifier que le client existe uniquement s'il est renseigné
+        if (dto.IdClient.HasValue)
+        {
+            var clientExiste = await _context.Clients
+                .AnyAsync(c => c.IdClient == dto.IdClient.Value);
 
-        if (!clientExiste)
-            return BadRequest("Le client spécifié n'existe pas.");
+            if (!clientExiste)
+                return BadRequest("Le client spécifié n'existe pas.");
+        }
 
         var commande = new Commande
         {
@@ -86,12 +89,15 @@ public class CommandesController : ControllerBase
         if (commande == null)
             return NotFound("Commande introuvable.");
 
-        // Vérifier que le client existe
-        var clientExiste = await _context.Clients
-            .AnyAsync(c => c.IdClient == dto.IdClient);
+        // Vérifier que le client existe uniquement s'il est renseigné
+        if (dto.IdClient.HasValue)
+        {
+            var clientExiste = await _context.Clients
+                .AnyAsync(c => c.IdClient == dto.IdClient.Value);
 
-        if (!clientExiste)
-            return BadRequest("Le client spécifié n'existe pas.");
+            if (!clientExiste)
+                return BadRequest("Le client spécifié n'existe pas.");
+        }
 
         commande.IdClient = dto.IdClient;
         commande.IdTable = dto.IdTable;
@@ -103,6 +109,40 @@ public class CommandesController : ControllerBase
         await _context.SaveChangesAsync();
 
         return NoContent();
+    }
+    // PUT: api/Commandes/5/statut
+    [HttpPut("{id}/statut")]
+    public async Task<IActionResult> UpdateStatutCommande(
+        int id,
+        [FromBody] UpdateStatutCommandeDto dto)
+    {
+        var commande = await _context.Commandes.FindAsync(id);
+
+        if (commande == null)
+            return NotFound("Commande introuvable.");
+
+        var statutsAutorises = new[]
+        {
+        "En attente",
+        "En préparation",
+        "Prête",
+        "Servie",
+        "Annulée"
+    };
+
+        if (!statutsAutorises.Contains(dto.Statut))
+            return BadRequest("Statut de commande invalide.");
+
+        commande.Statut = dto.Statut;
+
+        await _context.SaveChangesAsync();
+
+        return Ok(new
+        {
+            message = "Statut de la commande mis à jour.",
+            idCommande = commande.IdCommande,
+            statut = commande.Statut
+        });
     }
 
     // DELETE: api/Commandes/5
