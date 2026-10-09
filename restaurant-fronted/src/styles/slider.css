@@ -1,0 +1,168 @@
+/* =========================
+   PLATS DU JOUR - SLIDER
+========================= */
+
+.daily-section {
+  margin-bottom: 55px;
+}
+
+.daily-title {
+  margin-bottom: 20px;
+}
+
+.daily-title span {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: #8b4bc1;
+}
+
+.daily-title h2 {
+  margin-top: 7px;
+  font-size: 27px;
+  color: #32145f;
+}
+
+.slider {
+  position: relative;
+  width: 100%;
+  height: 430px;
+  overflow: hidden;
+  border-radius: 22px;
+  box-shadow: 0 15px 40px rgba(78, 25, 127, 0.15);
+  background: #ddd;
+}
+
+.slider-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  animation: imageFade 0.8s ease;
+}
+
+@keyframes imageFade {
+  from {
+    opacity: 0.4;
+    transform: scale(1.03);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.slider-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(20, 10, 30, 0.75),
+    rgba(20, 10, 30, 0.05) 65%
+  );
+}
+
+.slider-info {
+  position: absolute;
+  left: 45px;
+  bottom: 45px;
+  color: white;
+}
+
+.daily-badge {
+  display: inline-block;
+  margin-bottom: 12px;
+  padding: 7px 13px;
+  border-radius: 20px;
+  background: #8b4bc1;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+.slider-info h2 {
+  margin-bottom: 8px;
+  font-size: 34px;
+}
+
+.slider-info p {
+  font-size: 19px;
+  font-weight: 700;
+}
+
+.slider-button {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 45px;
+  height: 45px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.85);
+  color: #542080;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.slider-button:hover {
+  background: white;
+  transform: translateY(-50%) scale(1.08);
+}
+
+.slider-left {
+  left: 20px;
+}
+
+.slider-right {
+  right: 20px;
+}
+
+.slider-dots {
+  position: absolute;
+  bottom: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: 8px;
+}
+
+.slider-dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.6);
+  cursor: pointer;
+}
+
+.slider-dot.active {
+  width: 25px;
+  border-radius: 10px;
+  background: white;
+}
+
+@media (max-width: 600px) {
+  .slider {
+    height: 320px;
+    border-radius: 16px;
+  }
+
+  .slider-info {
+    left: 25px;
+    bottom: 40px;
+  }
+
+  .slider-info h2 {
+    font-size: 25px;
+  }
+
+  .slider-button {
+    width: 38px;
+    height: 38px;
+  }
+}
